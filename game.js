@@ -111,8 +111,9 @@ function OnFirstClick () {
     alert('Web Audio API is not supported in this browser');
   }
 
+  //create the source
   var source = audioContext.createBufferSource();
-
+  // add the gain node
   gainNode[0] = audioContext.createGain();
 
   //connect it to the destination so you can hear it.
@@ -136,14 +137,6 @@ function OnFirstClick () {
   }
   //Now that the request has been defined, actually make the request. (send it)
   request.send();
-
-
-
-
-
-
-
-
 
   window.requestAnimationFrame(gameLoop); //trigger first loop
 }
