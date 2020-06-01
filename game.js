@@ -161,6 +161,7 @@ function move () {
 
 function setVolumes () {
   gainNode[0].gain.value = (camera.x - megaphones[0].x)/1200;
+  console.log(gainNode[0].gain.value)
 }
 
 //DRAWING EVERYTHING
