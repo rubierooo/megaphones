@@ -119,7 +119,7 @@ function OnFirstClick () {
   request.responseType = 'arraybuffer';
   //Once the request has completed... do this
   request.onload = function() {
-      context.decodeAudioData(request.response, function(response) {
+      audioContext.decodeAudioData(request.response, function(response) {
           /* --- play the sound AFTER the buffer loaded --- */
           //set the buffer to the response we just received.
           source.buffer = response;
