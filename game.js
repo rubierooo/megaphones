@@ -77,7 +77,7 @@ canvas.addEventListener('mousedown', function(e){
   camera.oldy = camera.y;
   mouse.dragging = true;
   if (firstClicked == false){
-    firstClicked == true;
+    firstClicked = true;
     OnFirstClick();
   }
 });
