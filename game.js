@@ -5,6 +5,7 @@ let camera = {x:0, y:0};
 let megaphones = [];
 let speedmult = 10;
 let speed = {x:0, y:0};
+let gainNode = [];
 
 ctx.font = "30px Helvetica";
 ctx.fillStyle = "red";
@@ -112,8 +113,10 @@ function OnFirstClick () {
 
   var source = audioContext.createBufferSource();
 
+  gainNode[0] = audioContext.createGain();
+
   //connect it to the destination so you can hear it.
-  source.connect(audioContext.destination);
+  source.connect(gainNode[0]).connect(audioContext.destination);
 
   var request = new XMLHttpRequest();
   //open the request
@@ -133,6 +136,12 @@ function OnFirstClick () {
   }
   //Now that the request has been defined, actually make the request. (send it)
   request.send();
+
+
+
+
+
+
 
 
 
@@ -158,7 +167,7 @@ function move () {
 }
 
 function setVolumes () {
-
+  gainNode[0].gain.value = (camera.x - megaphones[0].x)/1200;
 }
 
 //DRAWING EVERYTHING
