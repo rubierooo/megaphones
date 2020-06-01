@@ -6,6 +6,7 @@ let megaphones = [];
 let speedmult = 10;
 let speed = {x:0, y:0};
 let gainNode = [];
+const soundMultiplier = 5000;
 
 ctx.font = "30px Helvetica";
 ctx.fillStyle = "red";
@@ -160,7 +161,8 @@ function move () {
 }
 
 function setVolumes () {
-  gainNode[0].gain.value = (camera.x - megaphones[0].x)/1200;
+  var distanceSquared = ((camera.x - megaphone[0].x)*(camera.x - megaphone[0].x)) + ((camera.y - megaphone[0].y)*(camera.y - megaphone[0].y));
+  gainNode[0].gain.value = 1 /((distanceSquared/soundMultiplier) + 1);
   console.log(gainNode[0].gain.value)
 }
 
