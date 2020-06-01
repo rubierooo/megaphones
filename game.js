@@ -86,9 +86,9 @@ canvas.addEventListener('mouseup', function(e){
   mouse.dragging = false;
 });
 
-megaphones.push({x:600, y:50});
-megaphones.push({x:1200, y:-400});
-megaphones.push({x:-40, y:100});
+megaphones.push({x:600, y:50, url:'singers/adelaidaantunezegurbide.wav'});
+megaphones.push({x:1200, y:-400, url:'singers/adelaidaantunezegurbide.wav'});
+megaphones.push({x:-40, y:100, url:'singers/adelaidaantunezegurbide.wav'});
 
 
 var url  = 'singers/adelaidaantunezegurbide.wav';
@@ -109,12 +109,13 @@ function OnFirstClick () {
   }
 
   var source = audioContext.createBufferSource();
+
   //connect it to the destination so you can hear it.
   source.connect(audioContext.destination);
 
   var request = new XMLHttpRequest();
   //open the request
-  request.open('GET', url, true);
+  request.open('GET', megaphones[0].url , true);
   //webaudio paramaters
   request.responseType = 'arraybuffer';
   //Once the request has completed... do this
@@ -126,10 +127,12 @@ function OnFirstClick () {
           //start(0) should play asap.
           source.start(0);
           source.loop = true;
-      }, function () { console.error('The request failed.'); } );
+      }, function () { console.error('The request failed:' + megaphones[0].url); } );
   }
   //Now that the request has been defined, actually make the request. (send it)
   request.send();
+
+  
 
   window.requestAnimationFrame(gameLoop); //trigger first loop
 }
