@@ -6,8 +6,10 @@ let megaphones = [];
 let speedmult = 10;
 let speed = {x:0, y:0};
 
-
-
+ctx.font = "30px Helvetica";
+ctx.fillStyle = "red";
+ctx.textAlign = "center";
+ctx.fillText("Click to Start - Headphones Recommended", canvas.width/2, canvas.height/2);
 
 
 window.addEventListener("keydown", keyPressed, true);
@@ -132,13 +134,14 @@ function OnFirstClick () {
   //Now that the request has been defined, actually make the request. (send it)
   request.send();
 
-  
+
 
   window.requestAnimationFrame(gameLoop); //trigger first loop
 }
 
 function gameLoop (timeStamp) {
   move ();
+  setVolumes ();
   draw ();
   window.requestAnimationFrame(gameLoop);
 }
@@ -152,6 +155,10 @@ function move () {
     camera.x += speed.x;
     camera.y += speed.y;
   }
+}
+
+function setVolumes () {
+
 }
 
 //DRAWING EVERYTHING
