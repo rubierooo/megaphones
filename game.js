@@ -161,7 +161,7 @@ function move () {
 }
 
 function setVolumes () {
-  var distanceSquared = ((camera.x - megaphone[0].x)*(camera.x - megaphone[0].x)) + ((camera.y - megaphone[0].y)*(camera.y - megaphone[0].y));
+  var distanceSquared = ((camera.x - megaphones[0].x)*(camera.x - megaphones[0].x)) + ((camera.y - megaphones[0].y)*(camera.y - megaphones[0].y));
   gainNode[0].gain.value = 1 /((distanceSquared/soundMultiplier) + 1);
 }
 
