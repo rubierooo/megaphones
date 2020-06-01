@@ -1,26 +1,13 @@
 //declarations
 let canvas = document.getElementById("myCanvas");
 let ctx = canvas.getContext("2d");
-
-// audio context "actx"
-var audioContext;
-
-
-Number.prototype.mod = function(b) {
-    // Calculate
-    return ((this % b) + b) % b;
-}
-
-
-
 let camera = {x:0, y:0};
 let megaphones = [];
-
-
-//movement code
-
 let speedmult = 10;
 let speed = {x:0, y:0};
+
+
+
 
 
 window.addEventListener("keydown", keyPressed, true);
@@ -108,6 +95,9 @@ var url  = 'singers/adelaideantunezegurbide.wav';
 
 
 function OnFirstClick () {
+  // audio context "actx"
+  var audioContext;
+
   // create audio context "actx"
   try {
     // Fix up for prefixing
@@ -120,7 +110,7 @@ function OnFirstClick () {
 
   var source = audioContext.createBufferSource();
   //connect it to the destination so you can hear it.
-  source.connect(context.destination);
+  source.connect(audioContext.destination);
 
   var request = new XMLHttpRequest();
   //open the request
@@ -141,10 +131,8 @@ function OnFirstClick () {
   //Now that the request has been defined, actually make the request. (send it)
   request.send();
 
-}
-
-
   window.requestAnimationFrame(gameLoop); //trigger first loop
+}
 
 function gameLoop (timeStamp) {
   move ();
