@@ -91,7 +91,7 @@ megaphones.push({x:1200, y:-400});
 megaphones.push({x:-40, y:100});
 
 
-var url  = 'singers/adelaideantunezegurbide.wav';
+var url  = 'singers/adelaidaantunezegurbide.wav';
 
 
 function OnFirstClick () {
