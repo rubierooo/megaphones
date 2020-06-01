@@ -104,6 +104,9 @@ megaphones.push({x:1200, y:-400});
 megaphones.push({x:-40, y:100});
 
 
+var url  = 'singers/adelaideantunezegurbide.wav';
+
+
 function OnFirstClick () {
   // create audio context "actx"
   try {
@@ -114,13 +117,29 @@ function OnFirstClick () {
   catch(e) {
     alert('Web Audio API is not supported in this browser');
   }
-  // get the audio element
-  const audioElement = document.querySelector('audio');
 
-  // pass it into the audio context
-  const track = audioContext.createMediaElementSource(audioElement);
-  track.connect(audioContext.destination);
-  audioElement.play();
+  var source = audioContext.createBufferSource();
+  //connect it to the destination so you can hear it.
+  source.connect(context.destination);
+
+  var request = new XMLHttpRequest();
+  //open the request
+  request.open('GET', url, true);
+  //webaudio paramaters
+  request.responseType = 'arraybuffer';
+  //Once the request has completed... do this
+  request.onload = function() {
+      context.decodeAudioData(request.response, function(response) {
+          /* --- play the sound AFTER the buffer loaded --- */
+          //set the buffer to the response we just received.
+          source.buffer = response;
+          //start(0) should play asap.
+          source.start(0);
+          source.loop = true;
+      }, function () { console.error('The request failed.'); } );
+  }
+  //Now that the request has been defined, actually make the request. (send it)
+  request.send();
 
 }
 
