@@ -182,6 +182,7 @@ function OnFirstClick () {
 
   // create the listener
   listener = audioContext.listener;
+  listener.positionZ.value = -100;
 
   for (i = 0; i < megaphones.length; i++) {   //for each megaphone
 
