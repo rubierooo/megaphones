@@ -135,6 +135,8 @@ ctx.font = "30px Helvetica";
 ctx.fillStyle = "red";
 ctx.textAlign = "center";
 ctx.fillText("Loading! Headphones Recommended", canvas.width/2, canvas.height/2);
+ctx.fillRect(0,(canvas.height - 30),200,30);
+
 
 //load audioData
 for (let i = 0; i < megaphones.length; i++) {   //for each megaphone
@@ -151,7 +153,7 @@ for (let i = 0; i < megaphones.length; i++) {   //for each megaphone
       filesLoaded ++;
 
       // draw progress bar
-      ctx.fillRect(0,(canvas.height - 30),(canvas.width * (filesLoaded / megaphones.length)),30);
+      ctx.fillRect(0,(canvas.height - 30),200 + ((canvas.width - 200) * (filesLoaded / megaphones.length)),30);
 
       // see if everything's loaded
       if (filesLoaded >= megaphones.length) {
