@@ -112,7 +112,7 @@ function OnFirstClick () {
   }
 
   for (i = 0; i < megaphones.length; i++) {   //for each megaphone, make a gain node and load the sound n connect it all up
-  //create the source
+    //create the source
     source[i] = audioContext.createBufferSource();
 
     // add the gain node
@@ -121,7 +121,7 @@ function OnFirstClick () {
     //connect it to the destination so you can hear it.
     source[i].connect(gainNode[i]).connect(audioContext.destination);
 
-    request[i] = new XMLHttpRequest();
+    request.push(new XMLHttpRequest());
     //open the request
     request[i].open('GET', megaphones[i].url , true);
     //webaudio paramaters
