@@ -109,7 +109,7 @@ ctx.textAlign = "center";
 ctx.fillText("Loading! Headphones Recommended", canvas.width/2, canvas.height/2);
 
 //load audioData
-for (i = 0; i < megaphones.length; i++) {   //for each megaphone
+for (let i = 0; i < megaphones.length; i++) {   //for each megaphone
   console.log("loading number " + i);
   megaphones[i].request = new XMLHttpRequest();
   megaphones[i].request.open('GET', megaphones[i].url, true);
@@ -117,7 +117,7 @@ for (i = 0; i < megaphones.length; i++) {   //for each megaphone
 
   // Decode asynchronously
   megaphones[i].request.onload = function() {
-    audioContext.decodeAudioData(megaphones[i].request.response, function(buffer) {
+    audioContext.decodeAudioData(megaphones[i].request.response, function(buffer) { //thiiiis is the one that's not wooorking
       megaphones[i].buffer = buffer;
 
       // TODO add some kind of test that everything's done loading
