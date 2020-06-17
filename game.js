@@ -6,7 +6,8 @@ let megaphones = [];
 let speedmult = 10;
 let speed = {x:0, y:0};
 let doneLoading = false;
-const soundMultiplier = 50000;
+let filesLoaded = 0;
+const soundMultiplier = 500000;
 
 // user input stuff:
 window.addEventListener("keydown", keyPressed, true);
@@ -119,9 +120,17 @@ for (let i = 0; i < megaphones.length; i++) {   //for each megaphone
   megaphones[i].request.onload = function() {
     audioContext.decodeAudioData(megaphones[i].request.response, function(buffer) { //thiiiis is the one that's not wooorking
       megaphones[i].buffer = buffer;
+      filesLoaded ++;
 
-      // TODO add some kind of test that everything's done loading
-      allLoaded();
+      // draw progress bar
+      ctx.beginPath;
+      ctx.rect(0,(canvas.height - 30),(canvas.width * (filesLoaded / megaphones.length)),30);
+      ctx.fill;
+
+      // see if everything's loaded
+      if (filesLoaded >= megaphones.length) {
+        allLoaded();
+      }
     });
   }
   megaphones[i].request.send();
