@@ -113,7 +113,6 @@ function OnFirstClick () {
   for (i = 0; i < megaphones.length; i++) {   //for each megaphone, make a gain node and load the sound n connect it all up
 
     console.log(megaphones[i].url)
-    
     //create the source
     source[i] = audioContext.createBufferSource();
 
@@ -130,7 +129,8 @@ function OnFirstClick () {
     request.responseType = 'arraybuffer';
     //Once the request has completed... do this
     request.onload = function() {
-        audioContext.decodeAudioData(request.response, function(response) {
+        var audioData = request.response;
+        audioContext.decodeAudioData(audioData, function(audioData) {
             /* --- play the sound AFTER the buffer loaded --- */
             //set the buffer to the response we just received.
             source[i].buffer = response;
