@@ -176,8 +176,7 @@ function OnFirstClick () {
 
   // create the listener
   listener = audioContext.listener;
-  listener.setPosition(camera.x,camera.y,0);
-
+  
   for (i = 0; i < megaphones.length; i++) {   //for each megaphone
 
     console.log("connecting and playing" + megaphones[i].url)
@@ -228,7 +227,8 @@ function move () {
 }
 
 function setVolumes () {
-  listener.setPosition(camera.x,camera.y,0);
+  listener.positionX.value = camera.x;
+  listener.positionY.value = camera.y;
 }
 
 //DRAWING EVERYTHING
