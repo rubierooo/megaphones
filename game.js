@@ -106,6 +106,10 @@ let names = [
   "ziax",
   "lottejohnson",
   "frangibson",
+  "anaiscomer",
+  "rosairwinclark",
+  "kitfalck",
+  "nadiaberri"
 ];
 
 for (let j = 0; j < names.length; j++) { // assign random position to each megaphone
@@ -176,7 +180,7 @@ function OnFirstClick () {
 
   // create the listener
   listener = audioContext.listener;
-  
+
   for (i = 0; i < megaphones.length; i++) {   //for each megaphone
 
     console.log("connecting and playing" + megaphones[i].url)
