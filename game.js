@@ -104,7 +104,7 @@ let names = [
   "ziax",
   "lottejohnson",
   "frangibson",
-]
+];
 
 for (j = 0, j < names.length, j ++) {
   let randx = ( Math.random() - 0.5 ) * 10000;
