@@ -124,7 +124,7 @@ function OnFirstClick () {
     //open the request
     request.open('GET', megaphones[i].url , true);
     //webaudio paramaters
-    request.responseType = 'ArrayBuffer';
+    request.responseType = 'arraybuffer';
     //Once the request has completed... do this
     request.onload = function() {
         audioContext.decodeAudioData(request.response, function(response) {
