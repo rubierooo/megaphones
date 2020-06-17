@@ -109,17 +109,17 @@ ctx.fillText("Loading...", canvas.width/2, canvas.height/2);
 
 //load audioData
 for (i = 0; i < megaphones.length; i++) {   //for each megaphone
-  var request = new XMLHttpRequest();
-  request.open('GET', megaphones[i].url, true);
-  request.responseType = 'arraybuffer';
+  megaphones[i].request = new XMLHttpRequest();
+  megaphones[i].request.open('GET', megaphones[i].url, true);
+  megaphones[i].request.responseType = 'arraybuffer';
 
   // Decode asynchronously
-  request.onload = function() {
-    audioContext.decodeAudioData(request.response, function(buffer) {
+  megaphones[i].request.onload = function() {
+    audioContext.decodeAudioData(megaphones[i].request.response, function(buffer) {
       megaphones[i].buffer = buffer;
     });
   }
-  request.send();
+  megaphones[i].request.send();
 }
 
 //display click to start
