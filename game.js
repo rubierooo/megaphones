@@ -1,3 +1,10 @@
+//TO DO LIST:
+// - mobile touch support
+// - add all the voices !
+// - panning
+// - dynamic scaling for huge/tiny windows
+// - make it look pretty!
+
 //declarations
 let canvas = document.getElementById("myCanvas");
 canvas.width = window.innerWidth;
@@ -90,9 +97,21 @@ canvas.addEventListener('mouseup', function(e){
 
 
 // set up all the megaphones
-megaphones.push({x:600, y:50, url:'singers/adelaidaantunezegurbide.wav'});
-megaphones.push({x:1200, y:-400, url:'singers/mollyirwinclark.wav'});
-megaphones.push({x:-40, y:100, url:'singers/emmaclayton.wav'});
+let names = [
+  "adelaidaantunezegurbide",
+  "mollyirwinclark",
+  "emmaclayton",
+  "ziax",
+  "lottejohnson",
+  "frangibson",
+]
+
+for (j = 0, j < names.length, j ++) {
+  let randx = ( Math.random() - 0.5 ) * 10000;
+  let randy = ( Math.random() - 0.5 ) * 10000;
+  let path = "singers/" + names[j] + ".wav";
+  megaphones.push({x:randx, y:randy, url:path});
+}
 
 //create audio context
 var audioContext;
@@ -206,7 +225,7 @@ function draw () {
   ctx.clearRect(0, 0, canvas.width, canvas.height); //clears screen
   drawMegaphones();
   //draw centre
-  ctx.fillStyle = "#ff00ff";
+//  ctx.fillStyle = "#ff00ff";
   ctx.beginPath();
   ctx.arc((canvas.width/2), (canvas.height/2), 10, 0, 2 * Math.PI);
   ctx.fill();
