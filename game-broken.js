@@ -5,6 +5,8 @@ let camera = {x:0, y:0};
 let megaphones = [];
 let speedmult = 10;
 let speed = {x:0, y:0};
+let gainNode = [];
+let source = [];
 const soundMultiplier = 50000;
 
 ctx.font = "30px Helvetica";
@@ -112,13 +114,13 @@ function OnFirstClick () {
 
     console.log(megaphones[i].url)
     //create the source
-    megaphones[i].source = audioContext.createBufferSource();
+    source[i] = audioContext.createBufferSource();
 
     // add the gain node
-    megaphones[i].gainNode = audioContext.createGain();
+    gainNode[i] = audioContext.createGain();
 
     //connect it to the destination so you can hear it.
-    megaphones[i].source.connect(megaphones[i].gainNode).connect(audioContext.destination);
+    source[i].connect(gainNode[i]).connect(audioContext.destination);
 
     var request = new XMLHttpRequest();
     //open the request
@@ -132,10 +134,10 @@ function OnFirstClick () {
         audioContext.decodeAudioData(audioData, function(buffer) {
             /* --- play the sound AFTER the buffer loaded --- */
             //set the buffer to the response we just received.
-            megaphones[i].source.buffer = buffer;
+            source[i].buffer = buffer;
             //start(0) should play asap.
-            megaphones[i].source.start(0);
-            smegaphones[i].source.loop = true;
+            source[i].start(0);
+            source[i].loop = true;
         }, function () { console.error('The request failed:' + megaphones[i].url); } );
     }
     //Now that the request has been defined, actually make the request. (send it)
@@ -166,7 +168,7 @@ function move () {
 function setVolumes () {
   for (i = 0; i < megaphones.length; i++) {   //for each megaphone
     var distanceSquared = ((camera.x - megaphones[i].x)*(camera.x - megaphones[i].x)) + ((camera.y - megaphones[i].y)*(camera.y - megaphones[i].y));
-    megaphones[i].gainNode.gain.value = 1 /((distanceSquared/soundMultiplier) + 1);
+    gainNode[i].gain.value = 1 /((distanceSquared/soundMultiplier) + 1);
   }
 }
 
