@@ -106,7 +106,7 @@ let names = [
   "frangibson",
 ];
 
-for (j = 0, j < names.length, j ++) {
+for (let j = 0; j < names.length; j++) {
   let randx = ( Math.random() - 0.5 ) * 10000;
   let randy = ( Math.random() - 0.5 ) * 10000;
   let path = "singers/" + names[j] + ".wav";
