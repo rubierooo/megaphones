@@ -128,14 +128,14 @@ function OnFirstClick () {
     //Once the request has completed... do this
     request.onload = function() {
         var audioData = request.response;
-        console.log(audioData);
+        console.log(i + ": " + audioData);
         audioContext.decodeAudioData(audioData, function(buffer) {
             /* --- play the sound AFTER the buffer loaded --- */
             //set the buffer to the response we just received.
             megaphones[i].source.buffer = buffer;
             //start(0) should play asap.
             megaphones[i].source.start(0);
-            smegaphones[i].source.loop = true;
+            megaphones[i].source.loop = true;
         }, function () { console.error('The request failed:' + megaphones[i].url); } );
     }
     //Now that the request has been defined, actually make the request. (send it)
