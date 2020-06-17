@@ -130,6 +130,7 @@ function OnFirstClick () {
     //Once the request has completed... do this
     request.onload = function() {
         var audioData = request.response;
+        console.log(audioData);
         audioContext.decodeAudioData(audioData, function(audioData) {
             /* --- play the sound AFTER the buffer loaded --- */
             //set the buffer to the response we just received.
