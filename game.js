@@ -4,6 +4,7 @@
 // - panning
 // - dynamic scaling for huge/tiny windows
 // - make it look pretty!
+// - window rescaling
 
 //declarations
 let canvas = document.getElementById("myCanvas");
@@ -16,6 +17,7 @@ let speedmult = 10;
 let speed = {x:0, y:0};
 let doneLoading = false;
 let filesLoaded = 0;
+let listener = null;
 const soundMultiplier = 500000;
 
 // user input stuff:
@@ -107,8 +109,8 @@ let names = [
 ];
 
 for (let j = 0; j < names.length; j++) { // assign random position to each megaphone
-  let randx = Math.floor(( Math.random() - 0.5 ) * 10000);
-  let randy = Math.floor(( Math.random() - 0.5 ) * 10000);
+  let randx = Math.floor(( Math.random() - 0.5 ) * 7000);
+  let randy = Math.floor(( Math.random() - 0.5 ) * 7000);
   let path = "singers/" + names[j] + ".wav";
   megaphones.push({x:randx, y:randy, url:path});
 }
@@ -141,6 +143,7 @@ for (let i = 0; i < megaphones.length; i++) {   //for each megaphone
   megaphones[i].request.onload = function() {
     audioContext.decodeAudioData(megaphones[i].request.response, function(buffer) {
       megaphones[i].buffer = buffer;
+
       filesLoaded ++;
 
       // draw progress bar
@@ -171,6 +174,10 @@ function allLoaded () {
 
 function OnFirstClick () {
 
+  // create the listener
+  listener = audioContext.listener;
+  listener.setPosition(camera.x,camera.y,0);
+
   for (i = 0; i < megaphones.length; i++) {   //for each megaphone
 
     console.log("connecting and playing" + megaphones[i].url)
@@ -180,11 +187,21 @@ function OnFirstClick () {
     //set buffer to the megaphone buffer
     megaphones[i].source.buffer = megaphones[i].buffer
 
-    // add the gain node
-    megaphones[i].gainNode = audioContext.createGain();
+    // add the panner node
+    megaphones[i].panner = audioContext.createPanner();
+
+    megaphones[i].panner.panningModel = 'HRTF';
+    megaphones[i].panner.distanceModel = 'inverse';
+    megaphones[i].panner.refDistance = 200;
+    megaphones[i].panner.maxDistance = 3000;
+    megaphones[i].panner.rolloffFactor = 1;
+    megaphones[i].panner.coneInnerAngle = 360;
+    megaphones[i].panner.coneOuterAngle = 0;
+    megaphones[i].panner.coneOuterGain = 0;
+    megaphones[i].panner.setPosition(megaphones[i].x,megaphones[i].y,0);
 
     //connect it to the destination, play and loop
-    megaphones[i].source.connect(megaphones[i].gainNode).connect(audioContext.destination);
+    megaphones[i].source.connect(megaphones[i].panner).connect(audioContext.destination);
     megaphones[i].source.start(0);
     megaphones[i].source.loop = true;
   }
@@ -211,10 +228,7 @@ function move () {
 }
 
 function setVolumes () {
-  for (i = 0; i < megaphones.length; i++) {   //for each megaphone
-    var distanceSquared = ((camera.x - megaphones[i].x)*(camera.x - megaphones[i].x)) + ((camera.y - megaphones[i].y)*(camera.y - megaphones[i].y));
-    megaphones[i].gainNode.gain.value = 1 /((distanceSquared/soundMultiplier) + 1);
-  }
+  listener.setPosition(camera.x,camera.y,0);
 }
 
 //DRAWING EVERYTHING
@@ -224,9 +238,9 @@ function draw () {
   drawMegaphones();
   //draw centre
 //  ctx.fillStyle = "#ff00ff";
-  ctx.beginPath();
-  ctx.arc((canvas.width/2), (canvas.height/2), 10, 0, 2 * Math.PI);
-  ctx.fill();
+//  ctx.beginPath();
+//  ctx.arc((canvas.width/2), (canvas.height/2), 10, 0, 2 * Math.PI);
+//  ctx.fill();
 }
 
 function drawMegaphones() {
