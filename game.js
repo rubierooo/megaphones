@@ -109,7 +109,17 @@ let names = [
   "anaiscomer",
   "rosairwinclark",
   "kitfalck",
-  "nadiaberri"
+  "nadiaberri",
+  "poppycockburn",
+  "jenibainbridge",
+  "ninascott",
+  "kitdenison",
+  "agaujma",
+  "debsgrayson",
+  "mtanner",
+  "jennymoore",
+  "biancastephens",
+  "asherfynn"
 ];
 
 for (let j = 0; j < names.length; j++) { // assign random position to each megaphone
