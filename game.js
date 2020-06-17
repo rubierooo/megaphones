@@ -5,6 +5,7 @@ let camera = {x:0, y:0};
 let megaphones = [];
 let speedmult = 10;
 let speed = {x:0, y:0};
+let doneLoading = false;
 const soundMultiplier = 50000;
 
 // user input stuff:
@@ -74,7 +75,7 @@ canvas.addEventListener('mousedown', function(e){
   camera.oldx = camera.x;
   camera.oldy = camera.y;
   mouse.dragging = true;
-  if (firstClicked == false){
+  if ((firstClicked == false) && (doneLoading == true)){
     firstClicked = true;
     OnFirstClick();
   }
@@ -105,10 +106,11 @@ catch(e) {
 ctx.font = "30px Helvetica";
 ctx.fillStyle = "red";
 ctx.textAlign = "center";
-ctx.fillText("Loading...", canvas.width/2, canvas.height/2);
+ctx.fillText("Loading! Headphones Recommended", canvas.width/2, canvas.height/2);
 
 //load audioData
 for (i = 0; i < megaphones.length; i++) {   //for each megaphone
+  console.log("loading number " + i);
   megaphones[i].request = new XMLHttpRequest();
   megaphones[i].request.open('GET', megaphones[i].url, true);
   megaphones[i].request.responseType = 'arraybuffer';
@@ -117,16 +119,24 @@ for (i = 0; i < megaphones.length; i++) {   //for each megaphone
   megaphones[i].request.onload = function() {
     audioContext.decodeAudioData(megaphones[i].request.response, function(buffer) {
       megaphones[i].buffer = buffer;
+      doneLoading();
     });
   }
   megaphones[i].request.send();
 }
 
-//display click to start
-ctx.font = "30px Helvetica";
-ctx.fillStyle = "red";
-ctx.textAlign = "center";
-ctx.fillText("Click to Start - Headphones Recommended", canvas.width/2, canvas.height/2);
+
+function doneLoading () {
+  // clear screen
+  ctx.clearRect(0, 0, canvas.width, canvas.height); //clears screen
+  //display click to start
+  ctx.font = "30px Helvetica";
+  ctx.fillStyle = "red";
+  ctx.textAlign = "center";
+  ctx.fillText("Click to Start", canvas.width/2, canvas.height/2);
+
+  doneLoading = true;
+}
 
 
 function OnFirstClick () {
