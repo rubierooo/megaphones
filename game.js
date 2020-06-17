@@ -95,9 +95,6 @@ megaphones.push({x:1200, y:-400, url:'singers/adelaidaantunezegurbide.wav'});
 megaphones.push({x:-40, y:100, url:'singers/adelaidaantunezegurbide.wav'});
 
 
-var url  = 'singers/adelaidaantunezegurbide.wav';
-
-
 function OnFirstClick () {
   // audio context "actx"
   var audioContext;
@@ -114,30 +111,33 @@ function OnFirstClick () {
 
   //create the source
   var source = audioContext.createBufferSource();
-  // add the gain node
-  gainNode[0] = audioContext.createGain();
 
-  //connect it to the destination so you can hear it.
-  source.connect(gainNode[0]).connect(audioContext.destination);
+  for (i = 0; i < megaphones.length; i++) {   //for each megaphone, make a gain node and load the sound n connect it all up
+    // add the gain node
+    gainNode[i] = audioContext.createGain();
 
-  var request = new XMLHttpRequest();
-  //open the request
-  request.open('GET', megaphones[0].url , true);
-  //webaudio paramaters
-  request.responseType = 'arraybuffer';
-  //Once the request has completed... do this
-  request.onload = function() {
-      audioContext.decodeAudioData(request.response, function(response) {
-          /* --- play the sound AFTER the buffer loaded --- */
-          //set the buffer to the response we just received.
-          source.buffer = response;
-          //start(0) should play asap.
-          source.start(0);
-          source.loop = true;
-      }, function () { console.error('The request failed:' + megaphones[0].url); } );
+    //connect it to the destination so you can hear it.
+    source.connect(gainNode[i]).connect(audioContext.destination);
+
+    var request = new XMLHttpRequest();
+    //open the request
+    request.open('GET', megaphones[i].url , true);
+    //webaudio paramaters
+    request.responseType = 'arraybuffer';
+    //Once the request has completed... do this
+    request.onload = function() {
+        audioContext.decodeAudioData(request.response, function(response) {
+            /* --- play the sound AFTER the buffer loaded --- */
+            //set the buffer to the response we just received.
+            source.buffer = response;
+            //start(0) should play asap.
+            source.start(0);
+            source.loop = true;
+        }, function () { console.error('The request failed:' + megaphones[i].url); } );
+    }
+    //Now that the request has been defined, actually make the request. (send it)
+    request.send();
   }
-  //Now that the request has been defined, actually make the request. (send it)
-  request.send();
 
   window.requestAnimationFrame(gameLoop); //trigger first loop
 }
@@ -161,8 +161,10 @@ function move () {
 }
 
 function setVolumes () {
-  var distanceSquared = ((camera.x - megaphones[0].x)*(camera.x - megaphones[0].x)) + ((camera.y - megaphones[0].y)*(camera.y - megaphones[0].y));
-  gainNode[0].gain.value = 1 /((distanceSquared/soundMultiplier) + 1);
+  for (i = 0; i < megaphones.length; i++) {   //for each megaphone
+    var distanceSquared = ((camera.x - megaphones[i].x)*(camera.x - megaphones[i].x)) + ((camera.y - megaphones[i].y)*(camera.y - megaphones[i].y));
+    gainNode[i].gain.value = 1 /((distanceSquared/soundMultiplier) + 1);
+  }
 }
 
 //DRAWING EVERYTHING
