@@ -107,8 +107,8 @@ let names = [
 ];
 
 for (let j = 0; j < names.length; j++) { // assign random position to each megaphone
-  let randx = ( Math.random() - 0.5 ) * 10000;
-  let randy = ( Math.random() - 0.5 ) * 10000;
+  let randx = Math.floor(( Math.random() - 0.5 ) * 10000);
+  let randy = Math.floor(( Math.random() - 0.5 ) * 10000);
   let path = "singers/" + names[j] + ".wav";
   megaphones.push({x:randx, y:randy, url:path});
 }
@@ -139,14 +139,12 @@ for (let i = 0; i < megaphones.length; i++) {   //for each megaphone
 
   // Decode asynchronously
   megaphones[i].request.onload = function() {
-    audioContext.decodeAudioData(megaphones[i].request.response, function(buffer) { //thiiiis is the one that's not wooorking
+    audioContext.decodeAudioData(megaphones[i].request.response, function(buffer) {
       megaphones[i].buffer = buffer;
       filesLoaded ++;
 
       // draw progress bar
-      ctx.beginPath;
-      ctx.rect(0,(canvas.height - 30),(canvas.width * (filesLoaded / megaphones.length)),30);
-      ctx.fill;
+      ctx.fillRect(0,(canvas.height - 30),(canvas.width * (filesLoaded / megaphones.length)),30);
 
       // see if everything's loaded
       if (filesLoaded >= megaphones.length) {
