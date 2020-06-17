@@ -134,7 +134,7 @@ function OnFirstClick () {
         audioContext.decodeAudioData(audioData, function(audioData) {
             /* --- play the sound AFTER the buffer loaded --- */
             //set the buffer to the response we just received.
-            source[i].buffer = response;
+            source[i].buffer = audioData;
             //start(0) should play asap.
             source[i].start(0);
             source[i].loop = true;
