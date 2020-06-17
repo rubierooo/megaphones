@@ -86,7 +86,10 @@ canvas.addEventListener('mouseup', function(e){
 
 
 
-
+//generic error message
+function onError () {
+  console.log("something went wrong");
+}
 
 
 // set up all the megaphones
