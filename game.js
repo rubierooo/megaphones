@@ -91,8 +91,8 @@ canvas.addEventListener('mouseup', function(e){
 });
 
 megaphones.push({x:600, y:50, url:'singers/adelaidaantunezegurbide.wav'});
-megaphones.push({x:1200, y:-400, url:'singers/adelaidaantunezegurbide.wav'});
-megaphones.push({x:-40, y:100, url:'singers/adelaidaantunezegurbide.wav'});
+megaphones.push({x:1200, y:-400, url:'singers/mollyirwinclark.wav'});
+megaphones.push({x:-40, y:100, url:'singers/emmaclayton.wav'});
 
 
 function OnFirstClick () {
