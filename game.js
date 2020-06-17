@@ -85,13 +85,6 @@ canvas.addEventListener('mouseup', function(e){
 });
 
 
-
-//generic error message
-function onError () {
-  console.log("something went wrong");
-}
-
-
 // set up all the megaphones
 megaphones.push({x:600, y:50, url:'singers/adelaidaantunezegurbide.wav'});
 megaphones.push({x:1200, y:-400, url:'singers/mollyirwinclark.wav'});
@@ -124,7 +117,7 @@ for (i = 0; i < megaphones.length; i++) {   //for each megaphone
   request.onload = function() {
     audioContext.decodeAudioData(request.response, function(buffer) {
       megaphones[i].buffer = buffer;
-    }, onError);
+    });
   }
   request.send();
 }
