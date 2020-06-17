@@ -7,12 +7,7 @@ let speedmult = 10;
 let speed = {x:0, y:0};
 const soundMultiplier = 50000;
 
-ctx.font = "30px Helvetica";
-ctx.fillStyle = "red";
-ctx.textAlign = "center";
-ctx.fillText("Click to Start - Headphones Recommended", canvas.width/2, canvas.height/2);
-
-
+// user input stuff:
 window.addEventListener("keydown", keyPressed, true);
 window.addEventListener("keyup", keyReleased, true)
 
@@ -89,57 +84,73 @@ canvas.addEventListener('mouseup', function(e){
   mouse.dragging = false;
 });
 
+
+
+
+
+
+// set up all the megaphones
 megaphones.push({x:600, y:50, url:'singers/adelaidaantunezegurbide.wav'});
 megaphones.push({x:1200, y:-400, url:'singers/mollyirwinclark.wav'});
 megaphones.push({x:-40, y:100, url:'singers/emmaclayton.wav'});
 
+//create audio context
+var audioContext;
+try {
+  // Fix up for prefixing
+  window.AudioContext = window.AudioContext||window.webkitAudioContext;
+  audioContext = new AudioContext();
+}
+catch(e) {
+  alert('Web Audio API is not supported in this browser');
+}
+
+//display loading
+ctx.font = "30px Helvetica";
+ctx.fillStyle = "red";
+ctx.textAlign = "center";
+ctx.fillText("Loading...", canvas.width/2, canvas.height/2);
+
+//load audioData
+for (i = 0; i < megaphones.length; i++) {   //for each megaphone
+  var request = new XMLHttpRequest();
+  request.open('GET', megaphones[i].url, true);
+  request.responseType = 'arraybuffer';
+
+  // Decode asynchronously
+  request.onload = function() {
+    audioContext.decodeAudioData(request.response, function(buffer) {
+      megaphones[i].buffer = buffer;
+    }, onError);
+  }
+  request.send();
+}
+
+//display click to start
+ctx.font = "30px Helvetica";
+ctx.fillStyle = "red";
+ctx.textAlign = "center";
+ctx.fillText("Click to Start - Headphones Recommended", canvas.width/2, canvas.height/2);
+
 
 function OnFirstClick () {
-  // audio context
-  var audioContext;
 
-  // create audio context
-  try {
-    // Fix up for prefixing
-    window.AudioContext = window.AudioContext||window.webkitAudioContext;
-    audioContext = new AudioContext();
-  }
-  catch(e) {
-    alert('Web Audio API is not supported in this browser');
-  }
+  for (i = 0; i < megaphones.length; i++) {   //for each megaphone
 
-  for (i = 0; i < megaphones.length; i++) {   //for each megaphone, make a gain node and load the sound n connect it all up
-
-    console.log(megaphones[i].url)
+    console.log("connecting and playing" + megaphones[i].url)
     //create the source
     megaphones[i].source = audioContext.createBufferSource();
+
+    //set buffer to the megaphone buffer
+    megaphones[i].source.buffer = megaphones[i].buffer
 
     // add the gain node
     megaphones[i].gainNode = audioContext.createGain();
 
-    //connect it to the destination so you can hear it.
+    //connect it to the destination, play and loop
     megaphones[i].source.connect(megaphones[i].gainNode).connect(audioContext.destination);
-
-    var request = new XMLHttpRequest();
-    //open the request
-    request.open('GET', megaphones[i].url , true);
-    //webaudio paramaters
-    request.responseType = 'arraybuffer';
-    //Once the request has completed... do this
-    request.onload = function() {
-        var audioData = request.response;
-        console.log(i + ": " + audioData);
-        audioContext.decodeAudioData(audioData, function(buffer) {
-            /* --- play the sound AFTER the buffer loaded --- */
-            //set the buffer to the response we just received.
-            megaphones[i].source.buffer = buffer;
-            //start(0) should play asap.
-            megaphones[i].source.start(0);
-            megaphones[i].source.loop = true;
-        }, function () { console.error('The request failed:' + megaphones[i].url); } );
-    }
-    //Now that the request has been defined, actually make the request. (send it)
-    request.send();
+    megaphones[i].source.start(0);
+    megaphones[i].source.loop = true;
   }
 
   window.requestAnimationFrame(gameLoop); //trigger first loop
