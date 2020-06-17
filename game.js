@@ -120,7 +120,7 @@ function OnFirstClick () {
     //connect it to the destination so you can hear it.
     source[i].connect(gainNode[i]).connect(audioContext.destination);
 
-    var request = new XMLHttpRequest());
+    var request = new XMLHttpRequest();
     //open the request
     request.open('GET', megaphones[i].url , true);
     //webaudio paramaters
