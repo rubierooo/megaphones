@@ -6,6 +6,7 @@ let megaphones = [];
 let speedmult = 10;
 let speed = {x:0, y:0};
 let gainNode = [];
+let source = [];
 const soundMultiplier = 50000;
 
 ctx.font = "30px Helvetica";
@@ -109,10 +110,10 @@ function OnFirstClick () {
     alert('Web Audio API is not supported in this browser');
   }
 
-  //create the source
-  var source = audioContext.createBufferSource();
-
   for (i = 0; i < megaphones.length; i++) {   //for each megaphone, make a gain node and load the sound n connect it all up
+  //create the source
+  source[i] = audioContext.createBufferSource();
+
     // add the gain node
     gainNode[i] = audioContext.createGain();
 
@@ -129,10 +130,10 @@ function OnFirstClick () {
         audioContext.decodeAudioData(request.response, function(response) {
             /* --- play the sound AFTER the buffer loaded --- */
             //set the buffer to the response we just received.
-            source.buffer = response;
+            source[i].buffer = response;
             //start(0) should play asap.
-            source.start(0);
-            source.loop = true;
+            source[i].start(0);
+            source[i].loop = true;
         }, function () { console.error('The request failed:' + megaphones[i].url); } );
     }
     //Now that the request has been defined, actually make the request. (send it)
