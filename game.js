@@ -119,14 +119,16 @@ for (i = 0; i < megaphones.length; i++) {   //for each megaphone
   megaphones[i].request.onload = function() {
     audioContext.decodeAudioData(megaphones[i].request.response, function(buffer) {
       megaphones[i].buffer = buffer;
-      doneLoading();
+
+      // TODO add some kind of test that everything's done loading
+      allLoaded();
     });
   }
   megaphones[i].request.send();
 }
 
 
-function doneLoading () {
+function allLoaded () {
   // clear screen
   ctx.clearRect(0, 0, canvas.width, canvas.height); //clears screen
   //display click to start
