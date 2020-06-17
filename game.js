@@ -7,6 +7,7 @@ let speedmult = 10;
 let speed = {x:0, y:0};
 let gainNode = [];
 let source = [];
+let request = [];
 const soundMultiplier = 50000;
 
 ctx.font = "30px Helvetica";
@@ -120,14 +121,14 @@ function OnFirstClick () {
     //connect it to the destination so you can hear it.
     source[i].connect(gainNode[i]).connect(audioContext.destination);
 
-    var request = new XMLHttpRequest();
+    var request[i] = new XMLHttpRequest();
     //open the request
-    request.open('GET', megaphones[i].url , true);
+    request[i].open('GET', megaphones[i].url , true);
     //webaudio paramaters
-    request.responseType = 'arraybuffer';
+    request[i].responseType = 'arraybuffer';
     //Once the request has completed... do this
-    request.onload = function() {
-        audioContext.decodeAudioData(request.response, function(response) {
+    request[i].onload = function() {
+        audioContext.decodeAudioData(request[i].response, function(response) {
             /* --- play the sound AFTER the buffer loaded --- */
             //set the buffer to the response we just received.
             source[i].buffer = response;
@@ -137,7 +138,7 @@ function OnFirstClick () {
         }, function () { console.error('The request failed:' + megaphones[i].url); } );
     }
     //Now that the request has been defined, actually make the request. (send it)
-    request.send();
+    request[i].send();
   }
 
   window.requestAnimationFrame(gameLoop); //trigger first loop
