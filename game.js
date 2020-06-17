@@ -109,11 +109,11 @@ function OnFirstClick () {
   catch(e) {
     alert('Web Audio API is not supported in this browser');
   }
-  for (i = 0; i < megaphones.length; i++) {   //for each megaphone
-    console.log(megaphones[i].url)
-  }
 
   for (i = 0; i < megaphones.length; i++) {   //for each megaphone, make a gain node and load the sound n connect it all up
+
+    console.log(megaphones[i].url)
+    
     //create the source
     source[i] = audioContext.createBufferSource();
 
