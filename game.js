@@ -6,7 +6,7 @@ let megaphones = [];
 let speedmult = 10;
 let speed = {x:0, y:0};
 let gainNode = [];
-const soundMultiplier = 5000;
+const soundMultiplier = 50000;
 
 ctx.font = "30px Helvetica";
 ctx.fillStyle = "red";
@@ -181,7 +181,7 @@ function drawMegaphones() {
   for (i = 0; i < megaphones.length; i++) {
     ctx.fillStyle = "#ff0000";
     ctx.beginPath();
-    ctx.arc(megaphones[i].x - camera.x + (canvas.width/2), megaphones[i].y - camera.y + (canvas.height/2), 50, 0, 2 * Math.PI);
+    ctx.arc(megaphones[i].x - camera.x + (canvas.width/2), megaphones[i].y - camera.y + (canvas.height/2), 25, 0, 2 * Math.PI);
     ctx.fill();
   }
 }
