@@ -97,10 +97,10 @@ megaphones.push({x:-40, y:100, url:'singers/emmaclayton.wav'});
 
 
 function OnFirstClick () {
-  // audio context "actx"
+  // audio context
   var audioContext;
 
-  // create audio context "actx"
+  // create audio context
   try {
     // Fix up for prefixing
     window.AudioContext = window.AudioContext||window.webkitAudioContext;
@@ -108,6 +108,9 @@ function OnFirstClick () {
   }
   catch(e) {
     alert('Web Audio API is not supported in this browser');
+  }
+  for (i = 0; i < megaphones.length; i++) {   //for each megaphone
+    console.log(megaphones[i].url)
   }
 
   for (i = 0; i < megaphones.length; i++) {   //for each megaphone, make a gain node and load the sound n connect it all up
