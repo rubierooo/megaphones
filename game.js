@@ -112,7 +112,7 @@ function OnFirstClick () {
 
   for (i = 0; i < megaphones.length; i++) {   //for each megaphone, make a gain node and load the sound n connect it all up
   //create the source
-  source[i] = audioContext.createBufferSource();
+    source[i] = audioContext.createBufferSource();
 
     // add the gain node
     gainNode[i] = audioContext.createGain();
